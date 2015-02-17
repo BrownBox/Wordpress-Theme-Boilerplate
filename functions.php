@@ -21,6 +21,7 @@ $includes = array(
 	array( 'file' => 'hero.php',            'dir' => 'fx' ),
 	array( 'file' => 'orbit.php',           'dir' => 'fx' ),
 	array( 'file' => 'block_grid.php',      'dir' => 'fx' ),
+	array( 'file' => 'extract.php',         'dir' => 'fx' ),
 
 	// custom posts (cpt_)
 	//array( 'file' => 'cpt_.php',          'dir' => 'ia' ),
