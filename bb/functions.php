@@ -117,34 +117,16 @@ function bb_new_field( $args ){
 
 }
 
-function bb_template_name () {
-// last updated 14/11/2014
+function bb_template_name() {
+    if( !isset( $GLOBALS['current_theme_template'] ) ) return false;
 
-	if ( is_user_logged_in() ) {
-		global $current_user;
-		get_currentuserinfo();
-		//var_dump( $current_user->user_email );
+    if ( current_user_can('manage_options') ) {
+        $template_name = get_page_template_slug(get_queried_object_id());
+        if (empty($template_name)) $template_name = '(default)';
+        echo '<div id="template-name">'.$GLOBALS['current_theme_template'].' > '.$template_name.'</div>'."\n";
+    }
 
-		$admin = get_option('admin_email');
-		$admin = substr( $admin, strpos( $admin, '@') );
-		if( strpos( $current_user->user_email,  $admin ) != false ) {
-
-			foreach ( debug_backtrace() as $called_file ) {
-				foreach ( $called_file as $index ) {
-					if ( !is_array($index[0]) AND strstr($index[0],'/themes/') AND !strstr($index[0],'footer.php') ) {
-						$template_file = $index[0] ;
-					}
-				}
-			}
-			$template_contents = file_get_contents($template_file) ;
-			preg_match_all("(Template Name:(.*)\n)siU",$template_contents,$template_name);
-			$template_name = trim($template_name[1][0]);
-			if ( !$template_name ) $template_name = '(default)';
-			$template_file = array_pop(explode('/themes/', basename($template_file)));
-			echo '<div id="template-name">'.$template_file . ' > '. $template_name.'</div>'."\n";
-		}
-	}
-	return;
+    return $GLOBALS['current_theme_template'];
 }
 
 ?>
